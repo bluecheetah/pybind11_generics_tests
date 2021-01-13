@@ -1,0 +1,15 @@
+# General files
+*.log
+*~
+
+# compiled binaries
+*.so
+
+# Python related files
+__pycache__
+*.egg-info
+.venv
+poetry.lock
+
+# output folders
+_build

@@ -1,0 +1,3 @@
+[submodule "pybind11_generics"]
+	path = pybind11_generics
+	url = git@github.com:bluecheetah/pybind11_generics.git
