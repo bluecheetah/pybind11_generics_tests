@@ -102,12 +102,12 @@ class PyAnimal : public Animal {
 };
 
 void bind_test_list(py::module &m) {
-    m.def("get_list", &get_list, "Returns the data associated with the given object.",
-          py::arg("obj"));
-
     py::class_<test_list>(m, "TestList")
         .def(py::init<pyg::List<py::int_>>(), "Initializer.")
         .def("get_data", &test_list::get_data, "Get a copy of the data.");
+
+    m.def("get_list", &get_list, "Returns the data associated with the given object.",
+          py::arg("obj"));
 
     py::class_<list_holder>(m, "ListHolder")
         .def(py::init<const test_list *>(), "Initializer.")

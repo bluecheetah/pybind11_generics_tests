@@ -12,16 +12,15 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.#
 
-from typing import Type, Any, Optional, Tuple
+from typing import Any, Optional, Tuple, Type
 
 import pytest
-
 
 init_signature = "__init__(self, arg0: {}) -> None"
 data_signature = "get_data(self) -> {}"
 
 
-def get_signature(obj: object) -> str:
+def get_signature(obj: Any) -> str:
     return obj.__doc__.splitlines()[0]
 
 
@@ -41,7 +40,7 @@ def do_constructor_test2(cls: Type[Any], data: object, expect: object) -> None:
         assert obj.get_data() == expect
 
 
-def do_error_test(cls: Type[Any], err: object, data: object) -> None:
+def do_error_test(cls: Type[Any], err: Type[Exception], data: object) -> None:
     with pytest.raises(err):
         cls(data)
 

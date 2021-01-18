@@ -13,3 +13,6 @@
 #   limitations under the License.#
 
 """Unit tests for pybind11_generics."""
+
+
+__version__ = "0.2.0"

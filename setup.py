@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Any
 
-from pybind11_utils.build import update_setup_kwargs
+from pybind11_utils.build import CMakePyBind11Build, CMakePyBind11Extension
+from setuptools import setup
 
-
-def build(setup_kwargs: Dict[str, Any]) -> None:
-    update_setup_kwargs(setup_kwargs, "pybind11_generics_tests", ["cpp"])
+if __name__ == "__main__":
+    setup(
+        ext_modules=[CMakePyBind11Extension("pybind11_generics_tests.cpp")],
+        cmdclass={"build_ext": CMakePyBind11Build},
+    )

@@ -56,10 +56,10 @@ class test_sequence {
 std::vector<int> get_sequence(const test_sequence &obj) { return obj.get_data(); }
 
 void bind_test_sequence(py::module &m) {
-    m.def("get_sequence", &get_sequence, "Returns the data associated with the given object.",
-          py::arg("obj"));
-
     py::class_<test_sequence>(m, "TestSequence")
         .def(py::init<pyg::Sequence<py::int_>>(), "Initializer.")
         .def("get_data", &test_sequence::get_data, "Get a copy of the data.");
+
+    m.def("get_sequence", &get_sequence, "Returns the data associated with the given object.",
+          py::arg("obj"));
 }

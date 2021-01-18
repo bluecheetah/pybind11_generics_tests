@@ -46,12 +46,11 @@ template <class T> class test_iterable {
     const vector_type &get_data() const { return data_; }
 };
 
-std::vector<std::string> copy_list_from_iterable(pyg::Iterable<std::string> iter) {
-    return std::vector<std::string>(iter.begin(), iter.end());
+std::vector<std::string> copy_list_from_iterable(pyg::Iterable<std::string> obj) {
+    return std::vector<std::string>(obj.begin(), obj.end());
 }
-
-std::vector<std::string> copy_list_from_iterable_set(pyg::Iterable<std::string> iter) {
-    auto set = std::unordered_set<std::string>(iter.begin(), iter.end());
+std::vector<std::string> copy_list_from_iterable_set(pyg::Iterable<std::string> obj) {
+    auto set = std::unordered_set<std::string>(obj.begin(), obj.end());
     return std::vector<std::string>(set.begin(), set.end());
 }
 
@@ -63,8 +62,8 @@ void bind_test_iterable(py::module &m) {
         .def(py::init<pyg::Iterable<std::pair<int, int>>>(), "Initializer.")
         .def("get_data", &test_iterable<std::pair<int, int>>::get_data, "Get a copy of the data.");
     m.def("copy_list_from_iterable", &copy_list_from_iterable,
-          "create list in c++ with iterable from python.", py::arg("iter"));
+          "create list in c++ with iterable from python.", py::arg("obj"));
     m.def("copy_list_from_iterable_set", &copy_list_from_iterable_set,
           "create list in c++ with iterable from python.  Implemented with unordered_set",
-          py::arg("iter"));
+          py::arg("obj"));
 }

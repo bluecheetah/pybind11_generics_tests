@@ -14,9 +14,9 @@
 
 import pytest
 
-import pyg_test
+import pybind11_generics_tests.cpp as pyg_test
 
-from .util import do_constructor_test, do_error_test, do_doc_test
+from .util import do_constructor_test, do_doc_test, do_error_test
 
 test_data = [
     (pyg_test.TestUnion, 1),
@@ -42,25 +42,25 @@ test_index_data = [
 ]
 
 
-@pytest.mark.parametrize("cls,data", test_data)
+@pytest.mark.parametrize(("cls", "data"), test_data)
 def test_constructor(cls, data):
     """Check object is constructed properly."""
     do_constructor_test(cls, data)
 
 
-@pytest.mark.parametrize("cls,err,data", fail_data)
+@pytest.mark.parametrize(("cls", "err", "data"), fail_data)
 def test_error(cls, err, data):
     """Check object errors when input has wrong data type."""
     do_error_test(cls, err, data)
 
 
-@pytest.mark.parametrize("cls,type_str", doc_data)
+@pytest.mark.parametrize(("cls", "type_str"), doc_data)
 def test_doc(cls, type_str):
     """Check object has correct doc string."""
     do_doc_test(cls, type_str)
 
 
-@pytest.mark.parametrize("cls,data,index", test_index_data)
+@pytest.mark.parametrize(("cls", "data", "index"), test_index_data)
 def test_index(cls, data, index):
     """Check object is constructed properly."""
     obj = cls(data)

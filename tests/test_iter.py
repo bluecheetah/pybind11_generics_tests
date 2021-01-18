@@ -13,12 +13,13 @@
 #   limitations under the License.#
 
 from itertools import zip_longest
+from typing import Any, List, Tuple, Type
 
 import pytest
 
-import pyg_test
+import pybind11_generics_tests.cpp as pyg_test
 
-from .util import do_error_test, do_doc_test
+from .util import do_doc_test, do_error_test
 
 test_data = [
     (pyg_test.TestIterString, []),
@@ -31,7 +32,7 @@ test_data = [
     (pyg_test.TestIterPair, [(0, 0), (32, 14)]),
 ]
 
-fail_data = [
+fail_data: List[Tuple[Type[Any], Type[Exception], Any]] = [
     (pyg_test.TestIterString, TypeError, ["a", "b", "c"]),
     (pyg_test.TestIterString, TypeError, None),
     (pyg_test.TestIterString, TypeError, []),
@@ -48,14 +49,14 @@ doc_data = [
 ]
 
 
-@pytest.mark.parametrize("cls,data", test_data)
+@pytest.mark.parametrize(("cls", "data"), test_data)
 def test_constructor(cls, data):
     """Check object is constructed properly."""
     obj = cls(iter(data))
     assert obj.get_data() == data
 
 
-@pytest.mark.parametrize("cls,data", test_data)
+@pytest.mark.parametrize(("cls", "data"), test_data)
 def test_iter(cls, data):
     """Check object iterator works properly."""
     obj = cls(iter(data))
@@ -63,13 +64,13 @@ def test_iter(cls, data):
         assert a == b
 
 
-@pytest.mark.parametrize("cls,err,data", fail_data)
+@pytest.mark.parametrize(("cls", "err", "data"), fail_data)
 def test_error(cls, err, data):
     """Check object errors when input has wrong data type."""
     do_error_test(cls, err, data)
 
 
-@pytest.mark.parametrize("cls,type_str", doc_data)
+@pytest.mark.parametrize(("cls", "type_str"), doc_data)
 def test_doc(cls, type_str):
     """Check object has correct doc string."""
     method_name_sig = ("get_iter", "get_iter(self) -> {}")
