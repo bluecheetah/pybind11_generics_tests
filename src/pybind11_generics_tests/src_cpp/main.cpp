@@ -25,8 +25,7 @@
 #include "test_tuple.h"
 #include "test_union.h"
 
-PYBIND11_MODULE(cpp, m)
-{
+PYBIND11_MODULE(cpp, m) {
     m.doc() = "This package contains test wrapper classes for generic data types.";
 
     bind_test_list(m);

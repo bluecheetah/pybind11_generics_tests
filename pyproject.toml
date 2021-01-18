@@ -1,27 +1,10 @@
-[build-system]
-build-backend = "poetry.core.masonry.api"
+[tool.black]
+line-length = 100
+target-version = [ "py38",]
+include = "\\.pyi?$"
+exclude = "\\.git|\\.mypy_cache|__pycache__|\\.venv|_build"
 
-[build-system.requres]
-poetry_core = ">=1.1.0"
-wheel = ""
-pybind11_utils = {path = "./pybind11_generics/", develop = true}
-
-
-[tool.poetry]
-name = "pybind11_generics_tests"
-version = "1.0.0"
-description = "Unit tests for pyind11_generics package."
-license = "Apache-2.0"
-authors = ["Eric Chang <info@bcanalog.com>"]
-readme = "README.md"
-packages = [
-    { include = "pybind11_generics_tests", from = "src" },
-]
-build = "build.py"
-
-[tool.poetry.dependencies]
-python = ">=3.7"
-
-[tool.poetry.dev-dependencies]
-# NOTE: this is a hack now, this is really a build dependency
-pybind11_utils = {path = "./pybind11_generics/", develop = true}
+[tool.isort]
+profile = "black"
+line_length = 100
+skip = [ ".git", ".mypy_cache", "__pycache__", ".venv", "_build",]
