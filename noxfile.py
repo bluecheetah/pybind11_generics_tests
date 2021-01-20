@@ -13,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import shutil
+from pathlib import Path
+
 import nox
 from nox.sessions import Session
 
@@ -20,8 +23,25 @@ VENV_BACKEND = "virtualenv"
 VENV_PARAMS = ["--system-site-packages"]
 
 
+def incremental_install(session: Session) -> None:
+    # NOTE: before https://github.com/pypa/pip/pull/9091 is merged, we install using setuptools
+    # So we get incremental build
+    wheel_dir = Path("_build/dist")
+    shutil.rmtree(wheel_dir, ignore_errors=True)
+    session.run_always("python", "setup.py", "bdist_wheel")
+    if not wheel_dir.is_dir():
+        raise ValueError(f"Cannot find wheel directory: {wheel_dir}")
+    children = list(wheel_dir.iterdir())
+    if len(children) != 1:
+        raise ValueError(f"More than one file in wheel directory: {wheel_dir}")
+    wheel_file = children[0]
+    if wheel_file.suffix != ".whl":
+        raise ValueError(f"Invalid wheel file: {wheel_file}")
+    session.install(str(wheel_file))
+
+
 @nox.session(venv_backend=VENV_BACKEND, venv_params=VENV_PARAMS)
 def test(session: Session) -> None:
-    session.install("--no-build-isolation", ".", env={"PYBIND11EXT_BUILD_PARALLEL": "0"})
     session.install("--ignore-installed", "pytest")
+    incremental_install(session)
     session.run("pytest", "-v", "tests")
