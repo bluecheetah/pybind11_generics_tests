@@ -13,13 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import nox
+from nox.sessions import Session
 
-from setuptools import setup
+VENV_BACKEND = "virtualenv"
+VENV_PARAMS = ["--system-site-packages"]
 
-from pybind11_generics.build import CMakePyBind11Build, CMakePyBind11Extension
 
-if __name__ == "__main__":
-    setup(
-        ext_modules=[CMakePyBind11Extension("pybind11_generics_tests.cpp")],
-        cmdclass={"build_ext": CMakePyBind11Build},
-    )
+@nox.session(venv_backend=VENV_BACKEND, venv_params=VENV_PARAMS)
+def test(session: Session) -> None:
+    session.install("--no-build-isolation", ".", env={"PYBIND11EXT_BUILD_PARALLEL": "0"})
+    session.install("--ignore-installed", "pytest")
+    session.run("pytest", "-v", "tests")
