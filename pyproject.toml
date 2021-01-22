@@ -2,7 +2,7 @@
 requires = [ 
   "setuptools>=51", 
   "wheel>=0.36", 
-  "pybind11_generics @ git+https://github.com/bluecheetah/pybind11_generics.git@0017165ab48234c808a615101bc8752e8587ad41"
+  "pybind11_generics @ git+https://github.com/bluecheetah/pybind11_generics.git@78df294bfa4cd044bd507582815bacba7b11c691"
   ]
 build-backend = "setuptools.build_meta"
 
