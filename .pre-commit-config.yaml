@@ -23,10 +23,11 @@ repos:
         types_or: [python, pyi]
       - id: mypy
         name: mypy
-        entry: python -m mypy
+        entry: python -m mypy --show-error-codes
         language: system
         types_or: [python, pyi]
         exclude: ^\.vscode/
+        require_serial: true
       - id: flake8
         name: flake8
         entry: python -m flake8

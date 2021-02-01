@@ -16,5 +16,9 @@
 
 """Unit tests for pybind11_generics."""
 
+try:
+    from ._version import version  # type: ignore[import]
 
-__version__ = "0.2.0"
+    __version__: str = version
+except ImportError:
+    pass

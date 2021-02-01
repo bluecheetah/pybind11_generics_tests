@@ -21,8 +21,8 @@
         }
     },
     "restructuredtext.languageServer.disabled": true,
-    "restructuredtext.confPath": "",
-    "restructuredtext.linter.executablePath": "rstcheck",
+    "restructuredtext.confPath": "${workspaceFolder}/docs/source",
+    "restructuredtext.linter.executablePath": "doc8",
     "emeraldwalk.runonsave": {
         "commands": [
             {
@@ -30,5 +30,10 @@
                 "cmd": "${workspaceFolder}/format_rst.sh ${file}"
             }
         ]
-    }
+    },
+    "restructuredtext.linter.name": "doc8",
+    "restructuredtext.linter.extraArgs": [
+        "--config",
+        ".doc8.ini"
+    ]
 }
